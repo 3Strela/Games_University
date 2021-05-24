@@ -1,0 +1,11 @@
+1. Primeiramente clique em jogar e, em seguida, escolha entre as opcoes:
+   'Normal'   --> Xadrez padrao
+   'Especial' --> Xadrez com as mesmas regras, porem com posicoes de
+    pecas aleatorias
+
+2. As regras sao bem semelhantes ao Xadrez tradicional
+
+3. A seguir imagens representando os possiveis movimentos de uma peca:
+   OBS: Areas em verde sao posicoes validas e areas em vermelho indicam
+   posicoes em que a peca do adversario sera 'retirada' caso o jogador
+   escolha essa posicao
