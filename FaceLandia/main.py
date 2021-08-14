@@ -3,6 +3,7 @@ from time import sleep
 from ctypes import *
 import random
 
+# gcc -shared funcoes.c -o funcoesC.dll
 funC = CDLL("./funcoesC.dll")
 
 def modTxt(var, col, faml, stl):
