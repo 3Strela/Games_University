@@ -91,7 +91,8 @@ def abrirBau(x, y, baus, bausDraw, resto, tela, ptX, ptY):
     aux = []
     cnt = 0
     for pos in baus:
-        if funC.abreBau(int(x), int(y), int(pos[0][0]), int(pos[0][1]), int(ptX), int(ptY), int(pos[1])) == 1:
+        # if funC.abreBau(int(x), int(y), int(pos[0][0]), int(pos[0][1]), int(ptX), int(ptY), int(pos[1])) == 1
+        if x >= pos[0][0] - ptX and x <= pos[0][0] + ptX and y >= pos[0][1] - ptY and y <= pos[0][1] + ptY and not(pos[1]):
             img = Image(Point(pos[0][0],pos[0][1]),'IMAGENS/bauAberto.png')
             pos = ((pos[0][0],pos[0][1]), True)
             img.draw(tela)
@@ -107,7 +108,8 @@ def abrirBau(x, y, baus, bausDraw, resto, tela, ptX, ptY):
 
 def posicaoValida(x, y, paredes):
     for itens in paredes:
-        if funC.pValida(int(x), int(y), int(itens[0][0]), int(itens[1][0]), int(itens[0][1]), int(itens[1][1])) == 1:
+        #if funC.pValida(int(x), int(y), int(itens[0][0]), int(itens[1][0]), int(itens[0][1]), int(itens[1][1])) == 1:
+        if x >= itens[0][0] - 8 and x <= itens[1][0] + 8 and y >= itens[0][1] - 8 and y <= itens[1][1] + 8:
             return False
 
     return True
@@ -279,7 +281,8 @@ def botMoves(tela, matriz, face, i, j, posX, posY, tp, mt, tempo_player_min, tem
     for itens in mt:
         itens.undraw()
 
-    dd_tmp = funC.difTempos(int(tempo_player_min), int(tempo_player_seg), int(minutos_bot), int(segundos_bot))
+    #dd_tmp = funC.difTempos(int(tempo_player_min), int(tempo_player_seg), int(minutos_bot), int(segundos_bot))
+    dd_tmp = (tempo_player_min * 60 + tempo_player_seg) - (minutos_bot * 60 + segundos_bot)
 
     sleep(1)
     tempos = Text(Point(400,170), 'Tempo do jogador: ' + str(tempo_player_min) + 'min ' + str(tempo_player_seg) + 'seg // Tempo do bot: ' + str(minutos_bot) + 'min ' + str(segundos_bot) + 'seg')
@@ -372,23 +375,24 @@ def jogar_labirinto(tela, face, fase, dificuldade):
 
     for i in range(lin):
         for j in range(col):
-            vv = funC.verificaTabuleiro(matriz[i][j])
-            if vv == 1:
+            #vv = funC.verificaTabuleiro(matriz[i][j])
+            vv = matriz[i][j]
+            if vv == '#':
                 desenho = Rectangle(Point(posX * (j + 1), posY * (i + 1)), Point((posX * (j + 1)) + acresX, (posY * (i + 1)) + acresY))
                 desenho.setFill('white')
                 paredes.append(((posX * (j + 1), posY * (i + 1)), ((posX * (j + 1)) + acresX, (posY * (i + 1)) + acresY)))
                 matriz_desenho.append(desenho)
             
-            elif vv == 2:
+            elif vv == 'i':
                 player_Face = Image(Point(posX * (j + 1) + posX / 2, posY * (i + 1) + posY / 2), face)
                 mm_player.append(player_Face)
             
-            elif vv == 3:
+            elif vv == 'f':
                 final = Image(Point(posX * (j + 1) + posX / 2, posY * (i + 1) + posY / 2), 'IMAGENS/bandeira.png')
                 endgame = (posX * (j + 1) + posX / 2, posY * (i + 1) + posY / 2)
                 matriz_desenho.append(final)
             
-            elif vv == 4:
+            elif vv == 't':
                 baus = Image(Point(posX * (j + 1) + posX / 2, posY * (i + 1) + posY / 2), 'IMAGENS/bau.png')
                 baus_list.append(((posX * (j + 1) + posX / 2, posY * (i + 1) + posY / 2), False))
                 bausDraw.append(baus)
@@ -446,8 +450,9 @@ def jogar_labirinto(tela, face, fase, dificuldade):
             txt_speed = modTxt(txt_speed, 'white', 'courier', 'bold')
             txt_speed.draw(tela)
             mm_player.append(txt_speed)
-      
-        elif funC.winGame(int(plX), int(plY), int(endgame[0]), int(endgame[1]), int(posX / 2), int(posY / 2 - 5)) == 1:
+
+        #elif funC.winGame(int(plX), int(plY), int(endgame[0]), int(endgame[1]), int(posX / 2), int(posY / 2 - 5)) == 1:
+        elif plX >= endgame[0] - (posX / 2) and plX <= endgame[0] + (posX / 2) and plY >= endgame[1] - posY / 2 - 5 and plY <= endgame[1] + posY / 2 - 5:
             game_on = False
         
         if timer == 20000:
