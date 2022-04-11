@@ -18,4 +18,4 @@ You're free to use this code was you want.
 
 Actually, just use it if you're brave enough to see someone's first time programming a game.
 
-Just install the "hangman_game" folder and play "main.py".
+Just install this ["hangman_game"](https://github.com/3Strela/Games_University/tree/main/What_did_I_do/hangman_game) folder and play "main.py".
