@@ -1,10 +1,10 @@
 from graphics import *
 from time import sleep
-from ctypes import *
+#from ctypes import *
 import random
 
 # gcc -shared funcoes.c -o funcoesC.dll
-funC = CDLL("./funcoesC.dll")
+#funC = CDLL("./funcoesC.dll")
 
 def modTxt(var, col, faml, stl):
     var.setFill(col)
@@ -257,12 +257,22 @@ def botMoves(tela, matriz, face, i, j, posX, posY, tp, mt, tempo_player_min, tem
         caminho.reverse()
         
         for quadrado in caminho:
-            sleep(0.5)
-            img_bot.undraw()
-            img_bot = Image(Point(posX * (quadrado[1] + 1) + posX / 2, posY * (quadrado[0] + 1) + posY / 2), face)
-            img_bot.draw(tela)
-            tudo.append(img_bot)
 
+            while True:
+                att_pos_X = (posX * (quadrado[1] + 1) + posX // 2) - img_bot.getAnchor().getX()
+                att_pos_Y = (posY * (quadrado[0] + 1) + posY // 2) - img_bot.getAnchor().getY()
+                
+                if img_bot.getAnchor().getX() > posX * (quadrado[1] + 1) + posX // 2 and abs(att_pos_X) > 0.01:
+                    img_bot.move(-0.04, 0)
+                elif img_bot.getAnchor().getX() < posX * (quadrado[1] + 1) + posX // 2 and abs(att_pos_X) > 0.01:
+                    img_bot.move(0.04, 0)
+                elif img_bot.getAnchor().getY() > posY * (quadrado[0] + 1) + posY // 2 and abs(att_pos_Y) > 0.01:
+                    img_bot.move(0, -0.04)
+                elif img_bot.getAnchor().getY() < posY * (quadrado[0] + 1) + posY // 2 and abs(att_pos_Y) > 0.01:
+                    img_bot.move(0, 0.04)
+                else:
+                    break
+            
             segundos_bot += 1
             if segundos_bot == 60:
                 segundos_bot = 0
@@ -555,7 +565,7 @@ def digitaTexto(tela, txt, x, y):
 def main():
     tela = GraphWin('LabiFaces: o labirinto de Facelândia', 800, 600)
     tela.setBackground("black")
-
+    
     menu_itens = criaMenu()
     for itens in menu_itens:
         itens.draw(tela)
